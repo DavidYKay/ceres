@@ -1,1 +1,5 @@
+# SQLite
+*.db
+
+# Virualenv
 venv/
