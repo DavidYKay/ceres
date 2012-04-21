@@ -9,7 +9,6 @@ class Department(models.Model):
   name = models.CharField(max_length=255)
 # TODO: Add 
   
-
 class PriceReport(models.Model):
   crop = models.ForeignKey(Crop)
   department = models.ForeignKey(Department)
