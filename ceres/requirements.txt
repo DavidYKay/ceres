@@ -1,8 +1,7 @@
 Django==1.4
 PyJWT==0.1.2
 South==0.7.4
-distribute==0.6.24
-django-twilio==0.2
+distribute>=0.6.24
 httplib2==0.7.4
 twilio==3.3.6
 wsgiref==0.1.2
