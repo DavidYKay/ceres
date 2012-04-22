@@ -32,7 +32,9 @@ class PriceReport(models.Model):
                                 default='local')
 
   def __unicode__(self):
-    return "%s for $%d on %s" % (self.crop, self.price, self.time)
+    #return "%s for $%d on %s" % (self.crop, self.price, self.time)
+    #return "%s for $%d in %s" % (self.crop, self.price, self.time)
+    return "%s : $%d : %s" % (self.crop, self.price, self.department)
 
 #class Price(models.Model):
 #  price_type = models.CharField(max_length=12, choices=PRICE_TYPES, default='model')
