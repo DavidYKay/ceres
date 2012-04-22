@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 <svg:svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -24,13 +26,26 @@
    sodipodi:docname="Nicaragua.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    version="1.0"
+   onload="alert(hello);"
    style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;display:inline;font-family:Dialog">
-  <script
-     type="text/ecmascript">&lt;![CDATA[
-      function showAlert() {
-        alert(&quot;SVG Alert&quot;);
+<script type="text/ecmascript">
+    <![CDATA[
+    var hello = 'hello world';
+      function showRectColor() {
+        alert(document.getElementById("myBlueRect").getAttributeNS(null,"fill"));
       }
-]]&gt;</script>
+		
+      function showRectArea(evt) {
+        var width = parseFloat(evt.target.getAttributeNS(null,"width"));
+        var height = parseFloat(evt.target.getAttributeNS(null,"height"));
+        alert("The rectangle area is: " + (width * height));
+      }
+		
+      function showRootChildrenNr() {
+        alert("Nr of Children: "+document.documentElement.childNodes.length);
+      }
+    ]]>
+  </script>
   <sodipodi:namedview
      inkscape:window-height="1036"
      inkscape:window-width="1916"
@@ -489,7 +504,7 @@
          x="1168.3989"
          y="706.40741"
          inkscape:label="#rect3779"
-         onmouseover="showAlert()" />
+         onclick="alert('hello');" />
     </svg:g>
     <svg:path
        style="opacity:1;fill:#c6ecff;fill-opacity:1;fill-rule:evenodd;stroke:#0978ab;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:3.86369991;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
