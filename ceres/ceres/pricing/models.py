@@ -39,10 +39,10 @@ class PriceReport(models.Model):
 
   def department_first(self):
     #return "%s : %s : $%f" % (self.department, self.crop, self.price/100)
-    return "%s : %s : $%s" % (self.department, self.crop, self.formatted_price())
+    return "%s : %s : %s" % (self.department, self.crop, self.formatted_price())
 
   def crop_first(self):
-    return "%s : $%f" % (self.crop, self.formatted_price())
+    return "%s : %s" % (self.crop, self.formatted_price())
 
   def __unicode__(self):
     #return "%s for $%d on %s" % (self.crop, self.price, self.time)
