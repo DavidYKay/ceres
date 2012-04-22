@@ -73,7 +73,6 @@ def get_best_prices_for_crop(cropName):
   priceStrings = map(PriceReport.department_first, priceReports)
   priceString = array_to_string(priceStrings, separator=' | ')
   pdb.set_trace()
-  #return textToSmsXmlResponse('Best prices for %s: %s' % (str(crop), priceString)))
   return textToSmsXmlResponse(priceString)
 
 def get_best_crops_in_department(departmentName):
