@@ -44,8 +44,38 @@ def sms_get_all(arguments):
   pdb.set_trace()
   return HttpResponse(xml, content_type='application/xml')
 
-def sms_upload(text):
-  pass
+def sms_upload(arguments):
+  assert len(arguments) >= 4
+  crop = Crop.objects.get(name__iexact=arguments[1])
+  department = Department.objects.get(name__iexact=arguments[2])
+  price = int(arguments[3]) * 100
+  pdb.set_trace()
+  #report.price_type = arguments[3]
+  #report.time = arguments[3]
+  report = PriceReport(
+      crop=crop,
+      department=department,
+      price=price,
+
+      submitter=None,
+      price_type='local',
+      #price_type='local',
+      )
+  pdb.set_trace()
+  try:
+    report.save()
+    pdb.set_trace()
+    r = twiml.Response()
+    r.sms("Saved report successfully: " + str(report))
+    xml = str(r)
+    pdb.set_trace()
+    return HttpResponse(xml, content_type='application/xml')
+  except Exception:
+    pdb.set_trace()
+    r = twiml.Response()
+    r.sms("Could not SAVE request.")
+    xml = str(r)
+    return HttpResponse(xml, content_type='application/xml')
 
 COMMAND_MAP = {
   "get": sms_get_all,
@@ -70,12 +100,14 @@ def sms(request):
     print("command: " + command)
 
     function = COMMAND_MAP[command]
-    function(arguments)
-    response = function(command)
+    response = function(arguments)
     pdb.set_trace()
     return response
   except Exception:
-    return HttpResponse("Could not process request.")
+    r = twiml.Response()
+    r.sms("Could not process request.")
+    xml = str(r)
+    return HttpResponse(xml, content_type='application/xml')
 
   #valid = True
   #if valid:

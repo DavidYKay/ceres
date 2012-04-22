@@ -26,9 +26,10 @@ class PriceReport(models.Model):
   crop = models.ForeignKey(Crop)
   department = models.ForeignKey(Department)
   time = models.DateTimeField(auto_now_add=True)
-  price_type = models.CharField(max_length=12, choices=PRICE_TYPES, default='model')
   # Amount in cents
   price = models.IntegerField()
+  price_type = models.CharField(max_length=12, choices=PRICE_TYPES,
+                                default='local')
 
   def __unicode__(self):
     return "%s for $%d on %s" % (self.crop, self.price, self.time)
