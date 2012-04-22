@@ -64,10 +64,12 @@ def sms_help(arguments):
 
 def get_best_prices_for_crop(cropName):
   print("get_best_prices_for_crop")
-  pdb.set_trace()
   crop = string_to_crop(cropName)
   priceReports = PriceReport.objects.filter(crop=crop).order_by('-price')[:5]
-  priceString = array_to_string(priceReports)
+
+  pdb.set_trace()
+  priceStrings = map(PriceReport.department_first, priceReports)
+  priceString = array_to_string(priceStrings)
   pdb.set_trace()
   #return textToSmsXmlResponse('Best prices for %s: %s' % (str(crop), priceString)))
   return textToSmsXmlResponse(priceString)
