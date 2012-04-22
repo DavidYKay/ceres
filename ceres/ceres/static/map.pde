@@ -37,23 +37,44 @@ String [][]prices = new String[17][6];
 
 
 //Dept Colors for Hover Detection
-color d1 = #4a7e1c;
-color d2 = #19551c;
-color d3 = #228005;
-color d4 = #168824;
-color d5 = #278a17;
-color d6 = #538007;
-color d7 = #83c800;
-color d8 = #64830a;
-color d9 = #77ff00;
-color d10 = #107b1b;
-color d11 = #6d8109;
-color d12 = #6f9900;
-color d13 = #5ea400;
-color d14 = #3d5a04;
-color d15 = #2b7206;
-color d16 = #85e700;
-color d17 = #c5ff00;
+
+// Processing - JAVA
+//color d1 = #4a7e1c;
+//color d2 = #19551c;
+//color d3 = #228005;
+//color d4 = #168824;
+//color d5 = #278a17;
+//color d6 = #538007;
+//color d7 = #83c800;
+//color d8 = #64830a;
+//color d9 = #77ff00;
+//color d10 = #107b1b;
+//color d11 = #6d8109;
+//color d12 = #6f9900;
+//color d13 = #5ea400;
+//color d14 = #3d5a04;
+//color d15 = #2b7206;
+//color d16 = #85e700;
+//color d17 = #c5ff00;
+
+// Processing.js
+color d1 = "-12157649";
+color d2 = "-15641307";
+color d3 = "-15630554";
+color d4 = "-16742346";
+color d5 = "-15300304";
+color d6 = "-11501784";
+color d7 = "-8468672";
+color d8 = "-10321366";
+color d9 = "-9830829";
+color d10 = "-16745683";
+color d11 = "-9666519";
+color d12 = "-9660369";
+color d13 = "-10968270";
+color d14 = "-12887526";
+color d15 = "-14454238";
+color d16 = "-8526261";
+color d17 = "-4063660";
 
 
 void setup() {
@@ -124,6 +145,8 @@ void draw() {
   //Ugly-ass code but works this shit should probably be a function
   textAlign(LEFT);
   mouseOverColor = get(mouseX, mouseY);
+  println("mouseOverColor: " + mouseOverColor); 
+
   if (mouseOverColor == d1)
   {
     text(prices[0][0], 50, height-50);
