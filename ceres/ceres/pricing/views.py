@@ -25,24 +25,23 @@ from models import Crop, Department, PriceReport
 #  else:
 #    print "NOT VALID.  It might have been spoofed!"
 
+def textToSmsXmlResponse(text):
+  r = twiml.Response()
+  r.sms(text)
+  xml = str(r)
+  return HttpResponse(xml, content_type='application/xml')
+
 def sms_echo(arguments):
   print("sms_get_all")
-  r = twiml.Response()
   pdb.set_trace()
-  r.sms('Echo: ' + str(arguments))
-  xml = str(r)
-  pdb.set_trace()
-  return HttpResponse(xml, content_type='application/xml')
+  return textToSmsXmlResponse('Echo: ' + str(arguments))
 
 def sms_get_all(arguments):
   print("sms_get_all")
-  r = twiml.Response()
   pdb.set_trace()
   crops = Crop.objects.all()
-  r.sms(str(crops))
-  xml = str(r)
   pdb.set_trace()
-  return HttpResponse(xml, content_type='application/xml')
+  return textToSmsXmlResponse(str(crops))
 
 def sms_upload(arguments):
   assert len(arguments) >= 4
@@ -65,17 +64,11 @@ def sms_upload(arguments):
   try:
     report.save()
     pdb.set_trace()
-    r = twiml.Response()
-    r.sms("Saved report successfully: " + str(report))
-    xml = str(r)
     pdb.set_trace()
-    return HttpResponse(xml, content_type='application/xml')
+    return textToSmsXmlResponse("Saved report successfully: " + str(report))
   except Exception:
     pdb.set_trace()
-    r = twiml.Response()
-    r.sms("Could not SAVE request.")
-    xml = str(r)
-    return HttpResponse(xml, content_type='application/xml')
+    return textToSmsXmlResponse("Could not SAVE request.")
 
 COMMAND_MAP = {
   "get": sms_get_all,
@@ -104,10 +97,7 @@ def sms(request):
     pdb.set_trace()
     return response
   except Exception:
-    r = twiml.Response()
-    r.sms("Could not process request.")
-    xml = str(r)
-    return HttpResponse(xml, content_type='application/xml')
+    return textToSmsXmlResponse("Could not process request.")
 
   #valid = True
   #if valid:
