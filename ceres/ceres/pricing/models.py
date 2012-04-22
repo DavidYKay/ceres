@@ -5,18 +5,20 @@ from django.contrib.auth.models import User
 
 class Crop(models.Model):
   name = models.CharField(max_length=255)
+  image = models.ImageField(upload_to='crops')
   def __unicode__(self):
     return self.name
 
 class Department(models.Model):
   name = models.CharField(max_length=255)
+  image = models.ImageField(upload_to='departments')
   # TODO: Add Geo Data
   def __unicode__(self):
     return self.name
 
 PRICE_TYPES = (
-  ('local', '3D Model'),
-  ('export', 'Texture'),
+  ('local', 'Local Market'),
+  ('export', 'Export Market'),
   )
 
 class PriceReport(models.Model):
@@ -27,7 +29,7 @@ class PriceReport(models.Model):
   price_type = models.CharField(max_length=12, choices=PRICE_TYPES, default='model')
   # Amount in cents
   price = models.IntegerField()
-  
+
   def __unicode__(self):
     return "%s for $%d on %s" % (self.crop, self.price, self.time)
 
