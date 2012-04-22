@@ -3,6 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.views.generic import list_detail
 
 from ceres.pricing.models import Crop, Department, PriceReport
+#from pricing.models import Crop, Department, PriceReport
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -16,6 +17,9 @@ urlpatterns = patterns('',
     #(r'^crops/page(?P<page>[0-9]+)/$', 'object_list', dict(info_dict)),
 
     (r'^crops/$', list_detail.object_list, {'queryset': Crop.objects.all()}),
+
+    (r'^sms/$', "ceres.pricing.views.sms"),
+    #(r'^sms/$', pricing.views.sms),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

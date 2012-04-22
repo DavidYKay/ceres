@@ -20,7 +20,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'ceres',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
+        'USER': 'ceres',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
@@ -122,9 +122,10 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     # Ours
     'ceres.pricing',
+    #'pricing',
 
     # Third-Party
-    'django_twilio',
+    #'twilio',
     'south',
 
     # Django Apps
