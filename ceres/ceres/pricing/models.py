@@ -22,7 +22,7 @@ PRICE_TYPES = (
   )
 
 class PriceReport(models.Model):
-  submitter = models.ForeignKey(User)
+  submitter = models.ForeignKey(User, null=True)
   crop = models.ForeignKey(Crop)
   department = models.ForeignKey(Department)
   time = models.DateTimeField(auto_now_add=True)
