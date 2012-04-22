@@ -1,0 +1,7 @@
+<ul>
+{% for object in object_list %}
+    <li>{{ object.name }}</li>
+{% empty %}
+    <li>Sorry, no crops in this list!</li>
+{% endfor %}
+<ul>

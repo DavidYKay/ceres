@@ -5,10 +5,14 @@ from django.contrib.auth.models import User
 
 class Crop(models.Model):
   name = models.CharField(max_length=255)
+  def __unicode__(self):
+    return self.name
 
 class Department(models.Model):
   name = models.CharField(max_length=255)
   # TODO: Add Geo Data
+  def __unicode__(self):
+    return self.name
 
 PRICE_TYPES = (
   ('local', '3D Model'),
@@ -23,6 +27,9 @@ class PriceReport(models.Model):
   price_type = models.CharField(max_length=12, choices=PRICE_TYPES, default='model')
   # Amount in cents
   price = models.IntegerField()
+  
+  def __unicode__(self):
+    return "%s for $%d on %s" % (self.crop, self.price, self.time)
 
 #class Price(models.Model):
 #  price_type = models.CharField(max_length=12, choices=PRICE_TYPES, default='model')
