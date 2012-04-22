@@ -27,11 +27,8 @@ from models import Crop, Department, PriceReport
 
 ''' Utilities '''
 
-def array_to_string(array):
-  return ', '.join(map(str, array))
-
-def array_to_double_colon_string(array):
-  return '::'.join(map(str, array))
+def array_to_string(array, separator=', '):
+  return separator.join(map(str, array))
 
 def string_to_crop(cropName):
   return Crop.objects.get(name__iexact=cropName)
@@ -74,7 +71,7 @@ def get_best_prices_for_crop(cropName):
 
   pdb.set_trace()
   priceStrings = map(PriceReport.department_first, priceReports)
-  priceString = array_to_string(priceStrings)
+  priceString = array_to_string(priceStrings, separator=' | ')
   pdb.set_trace()
   #return textToSmsXmlResponse('Best prices for %s: %s' % (str(crop), priceString)))
   return textToSmsXmlResponse(priceString)
@@ -85,7 +82,7 @@ def get_best_crops_in_department(departmentName):
 
   priceReports = PriceReport.objects.filter(department=department).order_by('-price')[:5]
   priceStrings = map(PriceReport.crop_first, priceReports)
-  priceString = array_to_string(priceStrings)
+  priceString = array_to_string(priceStrings, separator=' | ')
 
   pdb.set_trace()
   #return textToSmsXmlResponse('Best prices in %s: %s' % (str(department),priceString))
