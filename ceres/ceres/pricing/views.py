@@ -45,12 +45,10 @@ def sms_get_all(arguments):
 
 def sms_upload(arguments):
   assert len(arguments) >= 4
-  crop = Crop.objects.get(name__iexact=arguments[1])
+  crop       = Crop.objects.get(name__iexact=arguments[1])
   department = Department.objects.get(name__iexact=arguments[2])
-  price = int(arguments[3]) * 100
+  price      = int(arguments[3]) * 100
   pdb.set_trace()
-  #report.price_type = arguments[3]
-  #report.time = arguments[3]
   report = PriceReport(
       crop=crop,
       department=department,
@@ -58,12 +56,10 @@ def sms_upload(arguments):
 
       submitter=None,
       price_type='local',
-      #price_type='local',
       )
   pdb.set_trace()
   try:
     report.save()
-    pdb.set_trace()
     pdb.set_trace()
     return textToSmsXmlResponse("Saved report successfully: " + str(report))
   except Exception:
