@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-svg/jquery.svg.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+          var regionClicked = function (event) {
+            alert('hello region');
+          };
+
+          console.log("Document ready");
+          //var region1 = $("#region1").svg();
+          var region1 = $("#region1");
+          console.log("Region 1: " + region1);
+          region1.click( function(){
+            alert('hello region1');
+            });
+
+          var region2 = $("#region2");
+          console.log("Region 2: " + region2);
+          region2.click( function(){
+            alert('hello region2');
+            });
+
+          var region16 = $("#region16");
+          console.log("Region 16: " + region16);
+          region16.click( function(){
+              alert('hello region16');
+              });
+
+          var region17 = $("#region17");
+          console.log("Region 17: " + region17);
+          region17.click( function(){
+              alert('hello region17');
+              });
+
+          var path42 = $("#path42");
+          console.log("Path 42: " + path42);
+          path42.click( function(){
+              alert('hello path42');
+              });
+
+          var fakerect = $("#fakerect");
+          console.log("Fake Rect: " + fakerect);
+          fakerect.click( function(){
+              alert('hello fakerect');
+              });
+
+      });
+    </script>
+  </head>
+  <body>
+    Hello World
+    <object type="image/svg+xml" data="Nicaragua.svg">     
+    </object>
+  </body>
+</html>

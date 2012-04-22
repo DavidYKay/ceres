@@ -28,25 +28,65 @@ color d15 = -13930235;
 color d16 = -8001792;
 color d17 = -3801344;
 
-var departmentColors = {
-  -11829731 : "Boaco",
-  -15117028 : "Carazo",
-  -14516218 : "Chinadega",
-  -15037914 : "Chontales",
-  -14120168 : "Estelí",
-  -11304953 : "Granada",
-  -8140800  : "Jinotega",
-  -10190070 : "León",
-  -8913152  : "Madriz",
-  -16288491 : "Managua",
-  -9600759  : "Masaya",
-  -9463552  : "Matagalpa",
-  -10574848 : "Nueva Segovia",
-  -12756476 : "Rivas",
-  -13930235 : "Río San Juan",
-  -8001792  : "N. Autonomous Region",
-  -3801344  : "S. Autonomous Region"
-};
+//var departmentColors = {
+//  -11829731 : "Boaco",
+//  -15117028 : "Carazo",
+//  -14516218 : "Chinadega",
+//  -15037914 : "Chontales",
+//  -14120168 : "Estelí",
+//  -11304953 : "Granada",
+//  -8140800  : "Jinotega",
+//  -10190070 : "León",
+//  -8913152  : "Madriz",
+//  -16288491 : "Managua",
+//  -9600759  : "Masaya",
+//  -9463552  : "Matagalpa",
+//  -10574848 : "Nueva Segovia",
+//  -12756476 : "Rivas",
+//  -13930235 : "Río San Juan",
+//  -8001792  : "N. Autonomous Region",
+//  -3801344  : "S. Autonomous Region"
+//};
+
+
+HashMap departmentColors = new HashMap();
+// Original colors
+//departmentColors.put("-11829731" , "Boaco");
+//departmentColors.put("-15117028" , "Carazo");
+//departmentColors.put("-14516218" , "Chinadega");
+//departmentColors.put("-15037914" , "Chontales");
+//departmentColors.put("-14120168" , "Estelí");
+//departmentColors.put("-11304953" , "Granada");
+//departmentColors.put("-8140800"  , "Jinotega");
+//departmentColors.put("-10190070" , "León");
+//departmentColors.put("-8913152"  , "Madriz");
+//departmentColors.put("-16288491" , "Managua");
+//departmentColors.put("-9600759"  , "Masaya");
+//departmentColors.put("-9463552"  , "Matagalpa");
+//departmentColors.put("-10574848" , "Nueva Segovia");
+//departmentColors.put("-12756476" , "Rivas");
+//departmentColors.put("-13930235" , "Río San Juan");
+//departmentColors.put("-8001792"  , "N. Autonomous Region");
+//departmentColors.put("-3801344"  , "S. Autonomous Region");
+
+departmentColors.put("-11829731" , "Boaco");
+departmentColors.put("-15117028" , "Carazo");
+departmentColors.put("-14516218" , "Chinadega");
+departmentColors.put("-15037914" , "Chontales");
+departmentColors.put("-14120168" , "Estelí");
+departmentColors.put("-11304953" , "Granada");
+departmentColors.put("-10190070" , "León");
+departmentColors.put("-8913152"  , "Madriz");
+departmentColors.put("-16288491" , "Managua");
+departmentColors.put("-9600759"  , "Masaya");
+departmentColors.put("-9463552"  , "Matagalpa");
+departmentColors.put("-12756476" , "Rivas");
+
+departmentColors.put("-10968270" , "Nueva Segovia");
+departmentColors.put("-14454238" , "Río San Juan"); // Gradient!!
+departmentColors.put("-8468672"  , "Jinotega");
+departmentColors.put("-8526261"  , "N. Autonomous Region");
+departmentColors.put("-4063660"  , "S. Autonomous Region");
 
 boolean isPresent(object) {
   if (object) {
@@ -64,22 +104,28 @@ void logIsPresent(object) {
   }
 }
 
-void showText(text) 
+void showText(message) 
 {
-  text(text, width-250, height-100);
+  text(message, width-250, height-100);
 }
 
-void showTextAndLogIt(text) 
+void showTextAndLogIt(message) 
 {
-  showText(text);
-  printLn("Showing text: " + text);
+  showText(message);
+  println("Showing message: " + message);
 }
 
 void showTextForColor(colorCode)
 {
 
+  String colorString = str(colorCode);
+  String departmentString = departmentColors.get(colorString);
+  if (departmentString) {
+    showTextAndLogIt(departmentString);
+  } else {
+    println("department missing for color: " + colorString);
+  }
 }
-
 
 void setup() {
   size(800, 550);
@@ -98,73 +144,75 @@ void draw() {
   image(a, 0, 0); 
   
   mouseOverColor = get(mouseX, mouseY);
-  if (mouseOverColor == d1)
-  {
-    text("Boaco", width-250, height-100);
-  }
-  if (mouseOverColor == d2)
-  {
-    text("Carazo", width-250, height-100);
-  }
-  if (mouseOverColor == d3)
-  {
-    text("Chinandega", width-250, height-100);
-  }
-  if (mouseOverColor == d4)
-  {
-    text("Chontales", width-250, height-100);
-  }
-  if (mouseOverColor == d5)
-  {
-    text("Estelí", width-250, height-100);
-  }
-  if (mouseOverColor == d6)
-  {
-    text("Granada", width-250, height-100);
-  }
-  if (mouseOverColor == d7)
-  {
-    text("Jinotega", width-250, height-100);
-  }
-  if (mouseOverColor == d8)
-  {
-    text("León", width-250, height-100);
-  }
-  if (mouseOverColor == d9)
-  {
-    text("Madriz", width-250, height-100);
-  }
-  if (mouseOverColor == d10)
-  {
-    text("Managua", width-250, height-100);
-  }
-  if (mouseOverColor == d11)
-  {
-    text("Masaya", width-250, height-100);
-  }
-  if (mouseOverColor == d12)
-  {
-    text("Matagalpa", width-250, height-100);
-  }
-  if (mouseOverColor == d13)
-  {
-    text("Nueva Segovia", width-250, height-100);
-  }
-  if (mouseOverColor == d14)
-  {
-    text("Rivas", width-250, height-100);
-  }
-  if (mouseOverColor == d15)
-  {
-    text("Río San Juan", width-250, height-100);
-  }
-  if (mouseOverColor == d16)
-  {
-    text("N. Autonomous Region", width-250, height-100);
-  }
-  if (mouseOverColor == d17)
-  {
-    text("S. Autonomous Region", width-250, height-100);
-  }
-  print(mouseOverColor);
+
+  showTextForColor(mouseOverColor);
+  //if (mouseOverColor == d1)
+  //{
+  //  text("Boaco", width-250, height-100);
+  //}
+  //if (mouseOverColor == d2)
+  //{
+  //  text("Carazo", width-250, height-100);
+  //}
+  //if (mouseOverColor == d3)
+  //{
+  //  text("Chinandega", width-250, height-100);
+  //}
+  //if (mouseOverColor == d4)
+  //{
+  //  text("Chontales", width-250, height-100);
+  //}
+  //if (mouseOverColor == d5)
+  //{
+  //  text("Estelí", width-250, height-100);
+  //}
+  //if (mouseOverColor == d6)
+  //{
+  //  text("Granada", width-250, height-100);
+  //}
+  //if (mouseOverColor == d7)
+  //{
+  //  text("Jinotega", width-250, height-100);
+  //}
+  //if (mouseOverColor == d8)
+  //{
+  //  text("León", width-250, height-100);
+  //}
+  //if (mouseOverColor == d9)
+  //{
+  //  text("Madriz", width-250, height-100);
+  //}
+  //if (mouseOverColor == d10)
+  //{
+  //  text("Managua", width-250, height-100);
+  //}
+  //if (mouseOverColor == d11)
+  //{
+  //  text("Masaya", width-250, height-100);
+  //}
+  //if (mouseOverColor == d12)
+  //{
+  //  text("Matagalpa", width-250, height-100);
+  //}
+  //if (mouseOverColor == d13)
+  //{
+  //  text("Nueva Segovia", width-250, height-100);
+  //}
+  //if (mouseOverColor == d14)
+  //{
+  //  text("Rivas", width-250, height-100);
+  //}
+  //if (mouseOverColor == d15)
+  //{
+  //  text("Río San Juan", width-250, height-100);
+  //}
+  //if (mouseOverColor == d16)
+  //{
+  //  text("N. Autonomous Region", width-250, height-100);
+  //}
+  //if (mouseOverColor == d17)
+  //{
+  //  text("S. Autonomous Region", width-250, height-100);
+  //}
+  //print(mouseOverColor);
 }
