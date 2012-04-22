@@ -3,6 +3,7 @@
 import pdb;
 import random;
 
+from django.views.generic.simple import direct_to_template
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 
@@ -52,10 +53,13 @@ def unknown_command():
 
 ''' Views '''
 
+def home(request):
+  #return direct_to_template(request, {'template': 'anything.html'})
+  return direct_to_template(request, 'anything.html')
+
 def crop_ajax(request):
   responseString = str(random.random())
   return HttpResponse(responseString)
-
 
 def sms_echo(arguments):
   print("sms_get_all()")
