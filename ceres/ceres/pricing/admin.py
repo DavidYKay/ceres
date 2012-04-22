@@ -4,6 +4,7 @@ from models import Crop, Department, PriceReport
 
 class CropAdmin(admin.ModelAdmin):
   pass
+
 admin.site.register(Crop, CropAdmin)
 
 class DepartmentAdmin(admin.ModelAdmin):
@@ -11,5 +12,5 @@ class DepartmentAdmin(admin.ModelAdmin):
 admin.site.register(Department, DepartmentAdmin)
 
 class PriceReportAdmin(admin.ModelAdmin):
-  pass
+  list_filter = ('crop', 'department', 'price_type', 'time')
 admin.site.register(PriceReport, PriceReportAdmin)
