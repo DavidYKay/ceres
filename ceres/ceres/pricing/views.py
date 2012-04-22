@@ -32,9 +32,19 @@ def textToSmsXmlResponse(text):
   return HttpResponse(xml, content_type='application/xml')
 
 def sms_echo(arguments):
-  print("sms_get_all")
+  print("sms_get_all()")
   pdb.set_trace()
   return textToSmsXmlResponse('Echo: ' + str(arguments))
+
+def sms_help(arguments):
+  print("sms_help()")
+  pdb.set_trace()
+  helpText = '''
+    get crop [maize|papaya|yucca]
+    get department [Boaco|Chinandega|Carazo]
+    post maize boaco 8
+  '''
+  return textToSmsXmlResponse('Commands: ' + helpText)
 
 def sms_get_all(arguments):
   print("sms_get_all")
@@ -70,6 +80,7 @@ COMMAND_MAP = {
   "get": sms_get_all,
   "post": sms_upload,
   "echo": sms_echo,
+  "commands": sms_help,
 }
 
 """ The Master SMS endpoint """
@@ -83,7 +94,8 @@ def sms(request):
   try:
     myMessage = request.POST['Body']
     print("myMessage: " + myMessage)
-    arguments = myMessage.split(',')
+    #arguments = myMessage.split(',')
+    arguments = myMessage.split(' ')
     pdb.set_trace()
     command = arguments[0].lower()
     print("command: " + command)
@@ -93,7 +105,9 @@ def sms(request):
     pdb.set_trace()
     return response
   except Exception:
-    return textToSmsXmlResponse("Could not process request.")
+    commands = str(COMMAND_MAP.keys())
+    helpMessage = "I didn't understand. Please use one of the following commands: " + commands
+    return textToSmsXmlResponse(helpMessage)
 
   #valid = True
   #if valid:
