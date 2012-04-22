@@ -28,11 +28,16 @@ from models import Crop, Department, PriceReport
 ''' Utilities '''
 
 def array_to_string(array):
-  #return ', '.join(array)
   return ', '.join(map(str, array))
+
+def array_to_double_colon_string(array):
+  return '::'.join(map(str, array))
 
 def string_to_crop(cropName):
   return Crop.objects.get(name__iexact=cropName)
+
+def string_to_department(departmentName):
+  return Department.objects.get(name__iexact=departmentName)
 
 def textToSmsXmlResponse(text):
   r = twiml.Response()
@@ -74,14 +79,17 @@ def get_best_prices_for_crop(cropName):
   #return textToSmsXmlResponse('Best prices for %s: %s' % (str(crop), priceString)))
   return textToSmsXmlResponse(priceString)
 
-def get_best_crops_in_region(regionName):
-  print("get_best_prices_for_region")
-  region = string_to_region(regionName)
-  priceReports = PriceReport.objects.filter(region=region).order_by('-price')[:5]
+def get_best_crops_in_department(departmentName):
+  print("get_best_prices_for_department")
+  department = string_to_department(departmentName)
+
+  priceReports = PriceReport.objects.filter(department=department).order_by('-price')[:5]
+  priceStrings = map(PriceReport.crop_first, priceReports)
+  priceString = array_to_string(priceStrings)
+
   pdb.set_trace()
-  priceString = array_to_string(priceReports)
-  #return textToSmsXmlResponse('Best prices in %s: %s' % (str(region),priceString))
-  return textToSmsXmlResponse(priceString)
+  #return textToSmsXmlResponse('Best prices in %s: %s' % (str(department),priceString))
+  return textToSmsXmlResponse("Prices in %s: %s" % (str(department), priceString))
 
 def list_crops():
   print("sms_get_all")
@@ -95,7 +103,7 @@ def sms_get(arguments):
   if (arguments[1].lower() == 'crop'):
     return get_best_prices_for_crop(arguments[2])
   elif (arguments[1].lower() == 'department'):
-    return get_best_crops_in_region(arguments[2])
+    return get_best_crops_in_department(arguments[2])
   else:
     return unknown_command()
 
