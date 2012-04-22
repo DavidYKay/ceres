@@ -18,6 +18,7 @@ urlpatterns = patterns('',
 
     (r'^crops/$', list_detail.object_list, {'queryset': Crop.objects.all()}),
 
+    (r'^crops/ajax/$', "ceres.pricing.views.crop_ajax"),
     (r'^sms/$', "ceres.pricing.views.sms"),
     #(r'^sms/$', pricing.views.sms),
 

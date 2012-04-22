@@ -1,6 +1,7 @@
 # Create your views here.
 
 import pdb;
+import random;
 
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
@@ -51,6 +52,11 @@ def unknown_command():
 
 ''' Views '''
 
+def crop_ajax(request):
+  responseString = str(random.random())
+  return HttpResponse(responseString)
+
+
 def sms_echo(arguments):
   print("sms_get_all()")
   return textToSmsXmlResponse('Echo: ' + str(arguments))
@@ -69,10 +75,8 @@ def get_best_prices_for_crop(cropName):
   crop = string_to_crop(cropName)
   priceReports = PriceReport.objects.filter(crop=crop).order_by('-price')[:5]
 
-  pdb.set_trace()
   priceStrings = map(PriceReport.department_first, priceReports)
   priceString = array_to_string(priceStrings, separator=' | ')
-  pdb.set_trace()
   return textToSmsXmlResponse(priceString)
 
 def get_best_crops_in_department(departmentName):
@@ -83,19 +87,17 @@ def get_best_crops_in_department(departmentName):
   priceStrings = map(PriceReport.crop_first, priceReports)
   priceString = array_to_string(priceStrings, separator=' | ')
 
-  pdb.set_trace()
   #return textToSmsXmlResponse('Best prices in %s: %s' % (str(department),priceString))
   return textToSmsXmlResponse("Prices in %s: %s" % (str(department), priceString))
 
 def list_crops():
   print("sms_get_all")
   crops = Crop.objects.all()
-  pdb.set_trace()
   return textToSmsXmlResponse(array_to_string(crops))
 
 def sms_get(arguments):
   print("sms_get")
-  pdb.set_trace()
+  #pdb.set_trace()
   if (arguments[1].lower() == 'crop'):
     return get_best_prices_for_crop(arguments[2])
   elif (arguments[1].lower() == 'department'):
@@ -118,7 +120,7 @@ def sms_upload(arguments):
       )
   try:
     report.save()
-    pdb.set_trace()
+    #pdb.set_trace()
     return textToSmsXmlResponse("Saved report successfully: " + str(report))
   except Exception:
     return textToSmsXmlResponse("Could not SAVE request.")
@@ -146,7 +148,7 @@ def sms(request):
     command = arguments[0].lower()
     print("command: " + command)
 
-    pdb.set_trace()
+    #pdb.set_trace()
     function = COMMAND_MAP[command]
     response = function(arguments)
     return response
