@@ -24,6 +24,29 @@ PRICE_TYPES = (
   ('export', 'Export Market'),
   )
 
+#UNIT_TYPES = (
+#  ('quintal', 'quintal'),
+#  ('kg', 'kg'),
+#  ('lb', 'lb'),
+#  ('bushel', 'bushel'),
+#  )
+
+class Currency(models.Model):
+  name = models.CharField(max_length=127)
+  symbol = models.CharField(max_length=4)
+  def __unicode__(self):
+    return self.name
+
+  class Meta:
+    verbose_name_plural = "currencies"
+
+class WeightUnit(models.Model):
+  name = models.CharField(max_length=127)
+  symbol = models.CharField(max_length=8)
+
+  def __unicode__(self):
+    return self.name
+
 class PriceReport(models.Model):
   submitter = models.ForeignKey(User, null=True)
   crop = models.ForeignKey(Crop)
@@ -33,6 +56,8 @@ class PriceReport(models.Model):
   price = models.IntegerField()
   price_type = models.CharField(max_length=12, choices=PRICE_TYPES,
                                 default='local')
+  #weight_unit = models.ForeignKey(WeightUnit)
+  #currency = models.ForeignKey(Currency)
 
   def formatted_price(self):
     return locale.currency(float(self.price) / float(100), grouping=True )
