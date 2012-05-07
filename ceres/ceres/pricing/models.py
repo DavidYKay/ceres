@@ -8,7 +8,7 @@ locale.setlocale( locale.LC_ALL, '' )
 
 class Crop(models.Model):
   name = models.CharField(max_length=255)
-  image = models.ImageField(upload_to='crops')
+  image = models.ImageField(upload_to='crops', blank=True)
   def __unicode__(self):
     return self.name
 
@@ -56,11 +56,12 @@ class PriceReport(models.Model):
   price = models.IntegerField()
   price_type = models.CharField(max_length=12, choices=PRICE_TYPES,
                                 default='local')
-  #weight_unit = models.ForeignKey(WeightUnit)
-  #currency = models.ForeignKey(Currency)
+  weight_unit = models.ForeignKey(WeightUnit)
+  currency = models.ForeignKey(Currency)
 
   def formatted_price(self):
-    return locale.currency(float(self.price) / float(100), grouping=True )
+    #return locale.currency(float(self.price) / float(100), grouping=True )
+    return "%s%d" % (currency, price)
 
   def department_first(self):
     return "%s, %s, %s" % (self.department, self.crop, self.formatted_price())

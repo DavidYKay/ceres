@@ -11,6 +11,7 @@ class DepartmentAdmin(admin.ModelAdmin):
 admin.site.register(Department, DepartmentAdmin)
 
 class PriceReportAdmin(admin.ModelAdmin):
+  list_display = ( 'department', 'crop', 'price', 'currency' )
   list_filter = ('crop', 'department', 'price_type', 'time')
 admin.site.register(PriceReport, PriceReportAdmin)
 
