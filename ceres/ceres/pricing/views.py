@@ -11,6 +11,21 @@ from twilio import twiml
 
 from models import Crop, Department, PriceReport
 
+
+''' Constants '''
+
+class Commands:
+  COMMANDS    = u'comandos'
+  ECHO        = u'eco'
+  GET         = u'obtener'
+  POST        = u'publicar'
+
+  DEPARTMENT  = u'departamento'
+  CROP        = u'cosecha'
+
+  PLACEHOLDER = u'[xxx]'
+
+
 #from twilio.util import RequestValidator
 
 #AUTH_TOKEN = 'YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY'
@@ -29,8 +44,8 @@ from models import Crop, Department, PriceReport
 
 ''' Utilities '''
 
-def array_to_string(array, separator=', '):
-  return separator.join(map(str, array))
+def array_to_string(array, separator=u', '):
+  return separator.join(map(unicode, array))
 
 def string_to_crop(cropName):
   return Crop.objects.get(name__iexact=cropName)
@@ -41,14 +56,27 @@ def string_to_department(departmentName):
 def textToSmsXmlResponse(text):
   r = twiml.Response()
   r.sms(text)
-  xml = str(r)
+  xml = unicode(r)
   return HttpResponse(xml, content_type='application/xml')
 
 ''' Defaults '''
 
-def unknown_command():
-  commands = array_to_string(COMMAND_MAP.keys())
-  helpMessage = "I didn't understand. Please use one of the following commands: " + commands
+def unknown_command(command=None):
+  helpMessage = u''
+  if (command == Commands.GET):
+    #commands = [
+    #    Commands.DEPARTMENT,
+    #    Commands.CROP,
+    #    ]
+    ##commandString = ''
+    ###for cmd in commands:
+    #commandString += u"%s %s %s" % (Commands.GET, Commands.DEPARTMENT, Commands.PLACEHOLDER)
+    #commandString += u"%s %s %s" % (Commands.GET, Commands.CROP, Commands.PLACEHOLDER)
+    #commandString += "%s %s %s" % (Commands.GET, Commands.DEPARTMENT, Commands.PLACEHOLDER)
+    helpMessage = u"I didn't understand. Please use a correct command."
+  else:
+    commands = array_to_string(COMMAND_MAP.keys())
+    helpMessage = u"I didn't understand. Please use one of the following commands: " + commands
   return textToSmsXmlResponse(helpMessage)
 
 ''' Views '''
@@ -58,29 +86,30 @@ def home(request):
   return direct_to_template(request, 'anything.html')
 
 def crop_ajax(request):
-  responseString = str(random.random())
+  responseString = unicode(random.random())
   return HttpResponse(responseString)
 
 def sms_echo(arguments):
   print("sms_get_all()")
-  return textToSmsXmlResponse('Echo: ' + str(arguments))
+  return textToSmsXmlResponse('Echo: ' + unicode(arguments))
 
 def sms_help(arguments):
   print("sms_help()")
   helpText = '''
-    get crop [maize|papaya|yucca]
-    get department [Boaco|Chinandega|Carazo]
-    post maize boaco 8
+    obtener cosecha [maiz|papaya|yucca]
+    obtener departamento [Boaco|Chinandega|Carazo]
+    publicar yuca boaco 8
   '''
-  return textToSmsXmlResponse('Commands: ' + helpText)
+  return textToSmsXmlResponse('Comandos: ' + helpText)
 
 def get_best_prices_for_crop(cropName):
   print("get_best_prices_for_crop")
+  #pdb.set_trace()
   crop = string_to_crop(cropName)
   priceReports = PriceReport.objects.filter(crop=crop).order_by('-price')[:5]
 
   priceStrings = map(PriceReport.department_first, priceReports)
-  priceString = array_to_string(priceStrings, separator=' | ')
+  priceString = array_to_string(priceStrings, separator=u' | ')
   return textToSmsXmlResponse(priceString)
 
 def get_best_crops_in_department(departmentName):
@@ -89,10 +118,9 @@ def get_best_crops_in_department(departmentName):
 
   priceReports = PriceReport.objects.filter(department=department).order_by('-price')[:5]
   priceStrings = map(PriceReport.crop_first, priceReports)
-  priceString = array_to_string(priceStrings, separator=' | ')
+  priceString = array_to_string(priceStrings, separator=u' | ')
 
-  #return textToSmsXmlResponse('Best prices in %s: %s' % (str(department),priceString))
-  return textToSmsXmlResponse("Prices in %s: %s" % (str(department), priceString))
+  return textToSmsXmlResponse("Precios en %s: %s" % (unicode(department), priceString))
 
 def list_crops():
   print("sms_get_all")
@@ -102,12 +130,12 @@ def list_crops():
 def sms_get(arguments):
   print("sms_get")
   #pdb.set_trace()
-  if (arguments[1].lower() == 'crop'):
+  if (arguments[1].lower() == Commands.CROP):
     return get_best_prices_for_crop(arguments[2])
-  elif (arguments[1].lower() == 'department'):
+  elif (arguments[1].lower() == Commands.DEPARTMENT):
     return get_best_crops_in_department(arguments[2])
   else:
-    return unknown_command()
+    return unknown_command(command=Commands.GET)
 
 def sms_upload(arguments):
   assert len(arguments) >= 4
@@ -125,24 +153,24 @@ def sms_upload(arguments):
   try:
     report.save()
     #pdb.set_trace()
-    return textToSmsXmlResponse("Saved report successfully: " + str(report))
+    return textToSmsXmlResponse("Saved report successfully: " + unicode(report))
   except Exception:
     return textToSmsXmlResponse("Could not SAVE request.")
 
 COMMAND_MAP = {
-  "get": sms_get,
-  "post": sms_upload,
-  "echo": sms_echo,
-  "commands": sms_help,
+  Commands.GET: sms_get,
+  Commands.POST: sms_upload,
+  Commands.ECHO: sms_echo,
+  Commands.COMMANDS: sms_help,
 }
 
 """ The Master SMS endpoint """
 @csrf_exempt
 def sms(request):
   print("sms()")
-  print("request: " +  str(request))
+  print("request: " +  unicode(request))
   r = twiml.Response()
-  print("twiml response: " + str(r))
+  print("twiml response: " + unicode(r))
 
   try:
     myMessage = request.POST['Body']
