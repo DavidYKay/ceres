@@ -61,16 +61,16 @@ class PriceReport(models.Model):
 
   def formatted_price(self):
     #return locale.currency(float(self.price) / float(100), grouping=True )
-    return "%s%d" % (self.currency.symbol, self.price)
+    return u"%s%d" % (self.currency.symbol, self.price)
 
   def price_per_unit(self):
-    return "%s%s" % (self.formatted_price(), self.weight_unit.symbol)
+    return u"%s%s" % (self.formatted_price(), self.weight_unit.symbol)
 
   def department_first(self):
-    return "%s, %s, %s" % (self.department, self.crop, self.price_per_unit())
+    return u"%s, %s, %s" % (self.department, self.crop, self.price_per_unit())
 
   def crop_first(self):
-    return "%s, %s" % (self.crop, self.price_per_unit())
+    return u"%s, %s" % (self.crop, self.price_per_unit())
 
   def __unicode__(self):
     #return "%s for $%d on %s" % (self.crop, self.price, self.time)
